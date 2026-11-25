@@ -437,31 +437,10 @@
       return;
     }
 
-    let popup = null;
-    try {
-      popup = window.open("about:blank", "_blank");
-      if (popup) {
-        try {
-          popup.opener = null;
-        } catch (error) {
-          // Cross-origin restrictions can prevent this; the tab is still usable.
-        }
-      }
-    } catch (error) {
-      popup = null;
-    }
-
     els.copyButton.disabled = true;
     const copied = await copyToClipboard(text);
 
     if (!copied) {
-      if (popup) {
-        try {
-          popup.close();
-        } catch (error) {
-          // Ignore.
-        }
-      }
       showToast("Could not copy. Select the review text and copy it manually.");
       els.reviewText.focus();
       els.reviewText.select();
@@ -471,13 +450,15 @@
 
     showToast("Copied. Paste it on urbangrowlyst.in.");
 
+    let opened = false;
     try {
-      if (popup) {
-        popup.location.href = link;
-      } else {
-        window.location.href = link;
-      }
+      const win = window.open(link, "_blank", "noopener,noreferrer");
+      opened = Boolean(win);
     } catch (error) {
+      opened = false;
+    }
+
+    if (!opened) {
       window.location.href = link;
     }
 
