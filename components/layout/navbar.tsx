@@ -31,13 +31,6 @@ export function Navbar() {
       <div className="hidden border-b border-paper/20 bg-forest text-paper sm:block">
         <div className="mx-auto flex max-w-[1180px] items-center justify-between px-5 py-1.5 sm:px-8">
           <p className="label text-paper/80">Mumbai · For local businesses</p>
-          <a
-            href={`tel:${siteConfig.phoneLink}`}
-            className="label flex items-center gap-1.5 text-paper transition-colors hover:text-marigold"
-          >
-            <Phone className="size-3" aria-hidden="true" />
-            {siteConfig.phoneDisplay}
-          </a>
         </div>
       </div>
 
